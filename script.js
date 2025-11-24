@@ -281,16 +281,22 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
     }
 
     // --- IA HELPER ---
-    async function callGemini(promptText) {
-        try {
-            const result = await model.generateContent(promptText);
-            const response = await result.response;
-            return response.text();
-        } catch (e) {
-            console.error(e);
-            return "Erro ao conectar com a IA. Verifique se sua chave está ativa.";
-        }
+   // script.js (substitua a função callGemini)
+async function callGemini(promptText) {
+    try {
+        // Chama o SEU servidor, não o Google direto
+        const response = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: promptText })
+        });
+        const data = await response.json();
+        return data.text;
+    } catch (e) {
+        console.error(e);
+        return "Erro ao conectar com a IA.";
     }
+}
 
     // --- FERRAMENTAS ---
     async function analisarLaudo() {
@@ -443,7 +449,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
         const load = document.getElementById('loading-pobreza');
         load.style.display = 'block'; out.style.display = 'none';
         const prompt = `Gere uma Declaração de Hipossuficiência para ${userProfile.nome}.`;
-        const rawText = await callGemini(prompt);
+        const rawText = await (prompt);
         out.innerText = rawText;
         load.style.display = 'none'; out.style.display = 'block';
     }
@@ -453,6 +459,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
     // Load Profile from Storage
 
     preencherFormulario();
+
 
 
 
