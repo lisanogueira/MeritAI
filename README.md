@@ -45,7 +45,7 @@ A construção deste projeto contou com o auxílio intensivo do **Google Gemini 
 * **Lógica JavaScript:** Auxílio na escrita de funções assíncronas complexas para conectar o front-end à API do Gemini, tratando erros e respostas em tempo real.
 * **Refatoração e Debug:** Identificação instantânea de bugs no código e sugestões de otimização para garantir uma performance leve no navegador.
 
-### 2. Arquitetura Baseada em Conhecimento (RAG Simplificado)
+### 2. Arquitetura Baseada em Conhecimento 
 Para evitar que a IA inventasse informações ("alucinação"), o sistema não depende apenas do modelo treinado. Ele consulta uma **Base de Conhecimento Local** estruturada em JSON:
 * **Veracidade dos Dados:** As regras de elegibilidade para benefícios (renda per capita, idade, documentos) são lidas de um arquivo estático verificado.
 * **Curadoria de Vagas:** As oportunidades de emprego vêm de um banco de dados controlado, garantindo que o usuário só veja vagas reais e afirmativas.
