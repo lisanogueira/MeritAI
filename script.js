@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
     // --- CONFIGURAÇÃO ---
-    const GEMINI_API_KEY = "__GEMINI_API_KEY__"; 
+    const GEMINI_API_KEY = "AIzaSyBpB8rfCFmlfxtCY48YrqiC1mVueE80P3Y"; 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -453,5 +453,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
     // Load Profile from Storage
 
     preencherFormulario();
+
 
 
