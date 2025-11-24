@@ -35,22 +35,19 @@ Combatemos a estatística de desemprego conectando o usuário a vagas de empresa
 
 ---
 
-## 🛠️ Bastidores: Arquitetura Técnica
+## 🛠️ Bastidores: IA como Copiloto e Motor
 
-Este projeto foi desenvolvido durante a **Imersão Dev com Google Gemini**, demonstrando como conectar uma base de dados estruturada a modelos de linguagem avançados (LLMs).
+Este projeto é um exemplo prático de como a IA Generativa pode acelerar o desenvolvimento e potencializar a aplicação final.
 
-### 1. Base de Conhecimento (JSON)
-Diferente de chatbots genéricos que "alucinam", o MeritAI fundamenta suas respostas em dados estruturados locais. Criamos arquivos JSON que funcionam como a "verdade" do sistema para leis e oportunidades, garantindo precisão:
-* **Benefícios:** Mapeamento de regras lógicas (renda per capita, CIDs, documentos) para sugerir direitos com assertividade.
-* **Vagas:** Banco de dados de oportunidades com tags de acessibilidade (ex: "Sem vídeo", "Comunicação Assíncrona").
+### 1. Desenvolvimento Acelerado com Gemini no VS Code
+A construção deste projeto contou com o auxílio intensivo do **Google Gemini diretamente no VS Code**. A IA atuou como um "Pair Programmer" (programador parceiro) em todas as etapas:
+* **Geração de Boilerplate:** Criação rápida da estrutura HTML semântica e do CSS responsivo inicial.
+* **Lógica JavaScript:** Auxílio na escrita de funções assíncronas complexas para conectar o front-end à API do Gemini, tratando erros e respostas em tempo real.
+* **Refatoração e Debug:** Identificação instantânea de bugs no código e sugestões de otimização para garantir uma performance leve no navegador.
 
-### 2. JavaScript (Lógica de Negócios)
-A aplicação roda inteiramente no lado do cliente (Client-Side) usando JavaScript moderno (ES6+):
-* **Consumo de API:** Integração direta com a API do Google Gemini (`gemini-2.5-flash`) para processamento de linguagem natural em tempo real.
-* **Manipulação de DOM:** Atualização dinâmica da interface sem necessidade de recarregamento da página (SPA - Single Page Application feel).
-* **Geração de Arquivos:** Uso de bibliotecas JS para criar e baixar arquivos `.docx` personalizados diretamente no navegador do usuário.
+### 2. Arquitetura Baseada em Conhecimento (RAG Simplificado)
+Para evitar que a IA inventasse informações ("alucinação"), o sistema não depende apenas do modelo treinado. Ele consulta uma **Base de Conhecimento Local** estruturada em JSON:
+* **Veracidade dos Dados:** As regras de elegibilidade para benefícios (renda per capita, idade, documentos) são lidas de um arquivo estático verificado.
+* **Curadoria de Vagas:** As oportunidades de emprego vêm de um banco de dados controlado, garantindo que o usuário só veja vagas reais e afirmativas.
 
-### 3. Front-end (Interface)
-* **Design Inclusivo:** Interface limpa construída com HTML5 e CSS3, pensada para evitar sobrecarga sensorial (cores suaves, tipografia legível).
-* **Responsividade:** Layout adaptável que funciona perfeitamente em celulares e desktops, garantindo acesso democrático.
-
+O Gemini atua, portanto, como uma interface inteligente que processa e apresenta esses dados confiáveis de forma humanizada.
