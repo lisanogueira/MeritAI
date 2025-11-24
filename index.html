@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERIT | Plataforma de Direitos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Biblioteca para criar arquivos .docx (Word) -->
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.js"></script>
+    <!-- Biblioteca para salvar arquivos (FileSaver) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Configuração para Importar a IA direto do Google -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>MERIT</h1>
+        <p style="color: var(--text-muted);">Apoio Inteligente à Pessoa Atípica</p>
+    </div>
+</header>
+
+<main class="container">
+    <!-- 1. PERFIL -->
+    <section id="home" class="active">
+        <h2>Seu Perfil</h2>
+        <div class="card">
+            <p style="margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted);">Selecione seus diagnósticos (pode marcar mais de um) para filtrarmos os direitos.</p>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Ex: João Silva" required>
+                </div>
+                
+                <!-- SELEÇÃO MÚLTIPLA DE DIAGNÓSTICO -->
+                <div class="form-group">
+                    <label>Diagnósticos (Selecione todos que se aplicam)</label>
+                    <div class="diagnostico-chips">
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="tea" data-label="TEA (Autismo)">
+                            <span class="chip-content">TEA (Autismo)</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="tdah" data-label="TDAH">
+                            <span class="chip-content">TDAH</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="intelectual" data-label="Deficiência Intelectual">
+                            <span class="chip-content">Deficiência Intelectual</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="fisica" data-label="Deficiência Física">
+                            <span class="chip-content">Deficiência Física</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="visual" data-label="Deficiência Visual">
+                            <span class="chip-content">Deficiência Visual</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="auditiva" data-label="Deficiência Auditiva">
+                            <span class="chip-content">Deficiência Auditiva</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="dislexia" data-label="Dislexia">
+                            <span class="chip-content">Dislexia/TA</span>
+                        </label>
+                        <label class="chip-label">
+                            <input type="checkbox" name="diagnostico" value="outros" data-label="Outros/Em investigação">
+                            <span class="chip-content">Outros</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Cidade / Estado</label>
+                    <input type="text" id="cidade" placeholder="Ex: São Paulo, SP">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Idade</label>
+                        <input type="number" id="idade" placeholder="Anos">
+                    </div>
+                    <div class="form-group">
+                        <label>Pessoas na Casa</label>
+                        <input type="number" id="pessoas" placeholder="Total">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Renda Familiar Total (R$)</label>
+                    <input type="number" id="renda" placeholder="Ex: 1412">
+                </div>
+                <button type="submit" class="btn">Salvar e Identificar Direitos</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 2. DIREITOS -->
+    <section id="direitos">
+        <h2>Direitos Identificados</h2>
+        <div id="lista-beneficios">
+            <!-- Injetado via JS -->
+        </div>
+    </section>
+
+    <!-- 3. CHECKLIST -->
+    <section id="checklist">
+        <h2>Meus Processos</h2>
+        <div id="checklists-container">
+            <!-- Injetado via JS -->
+        </div>
+    </section>
+
+    <!-- 4. VAGAS (Dinamizado) -->
+    <section id="vagas">
+        <h2>Vagas & Empregabilidade</h2>
+        <div class="card" style="border-color: var(--secondary-color);">
+            <div class="card-header">
+                <h3 style="color: var(--secondary-color);">🚀 Currículo Simplificado</h3>
+            </div>
+            <p style="font-size: 0.9rem; margin-bottom: 15px; color: #d1d5db;">Gere um currículo adaptado para empresas inclusivas.</p>
+            <div class="form-group">
+                <label>Habilidades / Hiperfocos</label>
+                <!-- Adicionei o evento onkeyup para filtrar enquanto digita se o filtro estiver ativo -->
+                <input type="text" id="habilidadesInput" placeholder="Ex: Organização, Desenho, Programação..." onkeyup="if(document.getElementById('filtroCompativeis').checked) window.carregarVagas()">
+            </div>
+            <button class="btn btn-outline" style="border-color: var(--secondary-color); color: var(--secondary-color);" onclick="gerarCurriculo()">✨ Gerar com IA</button>
+            <div id="loading-cv" class="loading"><span class="spin"></span> Criando...</div>
+            <div id="resultado-cv" class="output-box" style="display:none; border-left: 4px solid var(--secondary-color);"></div>
+            <!-- Botão de Download Oculto Inicialmente -->
+            <button id="btnDownloadDocx" class="btn btn-small" style="margin-top:10px; display:none; background:#2563eb;" onclick="baixarCurriculoDocx()">📥 Baixar em .docx</button>
+        </div>
+
+        <h3 style="margin: 30px 0 15px; font-size: 1.2rem; color: var(--text-color);">Oportunidades Disponíveis</h3>
+        
+        <!-- Controles de Filtro -->
+        <div class="filters-container" style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <label class="chip-label">
+                <input type="checkbox" id="filtroAfirmativa" onchange="window.carregarVagas()">
+                <span class="chip-content" style="font-size: 0.85rem;">🌟 Vagas Afirmativas (Exclusivas)</span>
+            </label>
+            <label class="chip-label">
+                <input type="checkbox" id="filtroCompativeis" onchange="window.carregarVagas()">
+                <span class="chip-content" style="font-size: 0.85rem;">🎯 Compatíveis com meu Perfil</span>
+            </label>
+        </div>
+        
+        <!-- Container onde o JS vai injetar as vagas -->
+        <div id="lista-vagas">
+            <p class="loading" style="display:block">Carregando oportunidades...</p>
+        </div>
+    </section>
+
+    <!-- 5. SIMULAÇÃO -->
+    <section id="simulacao">
+        <h2>Simulação de Perícia</h2>
+        <div class="card">
+            <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-muted);">A IA sabe seu diagnóstico e fará perguntas específicas.</p>
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages"></div>
+                <div id="chat-typing" class="chat-typing">Perito digitando...</div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Digite sua resposta..." onkeypress="handleEnter(event)">
+                    <button class="btn btn-small" style="margin-top:0; width: auto; border-radius: 8px;" onclick="sendMessage()">Enviar</button>
+                </div>
+            </div>
+            <button class="btn btn-outline" onclick="startSimulation()" style="margin-top:15px;">🔄 Reiniciar Conversa</button>
+        </div>
+    </section>
+
+    <!-- 6. JURÍDICO -->
+    <section id="juridico">
+        <h2>Assistência Jurídica</h2>
+        <div class="card">
+            <h3>⚖️ Encontrar Defensoria</h3>
+            <button class="btn btn-outline" onclick="encontrarDefensoria()">📍 Localizar Defensoria Próxima</button>
+            <div id="loading-defensoria" class="loading"><span class="spin"></span> Buscando...</div>
+            <div id="resultado-defensoria" class="output-box" style="display:none;"></div>
+        </div>
+        
+        <div class="card">
+            <h3>📄 Declaração de Pobreza</h3>
+            <button class="btn btn-outline" onclick="gerarDeclaracaoPobreza()">Gerar Documento</button>
+            <div id="loading-pobreza" class="loading"><span class="spin"></span> Escrevendo...</div>
+            <div id="resultado-pobreza" class="output-box" style="display:none;"></div>
+        </div>
+
+        <!-- NOVO: Tradutor de Juridiquês -->
+        <div class="card" style="border-color: #a78bfa;">
+            <div class="card-header">
+                <h3>✨ Tradutor de "Juridiquês"</h3>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Recebeu uma carta do INSS ou leu uma lei que não entendeu? Cole aqui.</p>
+            <textarea id="juridiquesInput" placeholder="Cole o texto difícil aqui..."></textarea>
+            <button class="btn" style="background: var(--surface-hover); border: 1px solid var(--primary-color);" onclick="traduzirJuridiques()">Simplificar Texto</button>
+            <div id="loading-juridiques" class="loading"><span class="spin"></span> Traduzindo...</div>
+            <div id="resultado-juridiques" class="output-box" style="display:none;"></div>
+        </div>
+    </section>
+
+    <!-- 7. FERRAMENTAS -->
+    <section id="ferramentas">
+        <h2>Ferramentas IA</h2>
+        <div class="card">
+            <h3>🔍 Análise de Laudo</h3>
+            <textarea id="laudoInput" placeholder="Cole o laudo aqui..."></textarea>
+            <button class="btn" onclick="analisarLaudo()">Analisar Documento</button>
+            <div id="loading-laudo" class="loading"><span class="spin"></span> Analisando...</div>
+            <div id="resultado-laudo" class="output-box" style="display:none;"></div>
+        </div>
+        
+        <div class="card">
+            <h3>📝 Redator de Documentos</h3>
+            <select id="tipoDoc">
+                <option value="Requerimento do BPC">Requerimento do BPC</option>
+                <option value="Solicitação de AEE na Escola">Solicitação de AEE na Escola</option>
+                <option value="Recurso de Indeferimento">Recurso de Indeferimento</option>
+            </select>
+            <input type="text" id="contextoDoc" placeholder="Detalhes extras..." style="margin-bottom: 10px; margin-top: 10px;">
+            <button class="btn btn-outline" onclick="gerarDocumento()">Gerar Texto</button>
+            <div id="loading-doc" class="loading"><span class="spin"></span> Escrevendo...</div>
+            <div id="resultado-doc" class="output-box" style="display:none;"></div>
+        </div>
+
+        <!-- NOVO: Organizador de Rotina -->
+        <div class="card">
+            <h3>📅 Organizador de Rotina</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Crie uma rotina adaptada ao seu diagnóstico (ex: com pausas sensoriais).</p>
+            <input type="text" id="objetivoRotina" placeholder="Ex: Estudar para prova, limpar a casa, ir ao médico..." style="margin-bottom: 10px;">
+            <button class="btn btn-outline" onclick="gerarRotina()">✨ Criar Rotina Adaptada</button>
+            <div id="loading-rotina" class="loading"><span class="spin"></span> Planejando...</div>
+            <div id="resultado-rotina" class="output-box" style="display:none;"></div>
+        </div>
+
+        <!-- NOVO: Assistente de Comunicação -->
+        <div class="card">
+            <h3>💬 Assistente de Comunicação</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Ajuda a escrever mensagens difíceis (ex: pedir silêncio no trabalho, cobrar direitos).</p>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <input type="text" id="comunicacaoOque" placeholder="O que você precisa pedir/falar?" style="margin-bottom: 10px;">
+                <input type="text" id="comunicacaoQuem" placeholder="Para quem? (Chefe, Escola, Vizinho)">
+            </div>
+            <button class="btn btn-outline" onclick="gerarMensagem()">✨ Rascunhar Mensagem</button>
+            <div id="loading-msg" class="loading"><span class="spin"></span> Escrevendo...</div>
+            <div id="resultado-msg" class="output-box" style="display:none;"></div>
+        </div>
+    </section>
+
+</main>
+
+<nav class="nav-tabs">
+    <button class="nav-btn active" onclick="nav('home', this)"><svg viewBox="0 0 24 24"><path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg><span>Perfil</span></button>
+    <button class="nav-btn" onclick="nav('direitos', this)"><svg viewBox="0 0 24 24"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2 10.5 3.5 9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg><span>Direitos</span></button>
+    <button class="nav-btn" onclick="nav('checklist', this)"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Processos</span></button>
+    <button class="nav-btn" onclick="nav('vagas', this)"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><span>Vagas</span></button>
+    <button class="nav-btn" onclick="nav('simulacao', this)"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg><span>Simulação</span></button>
+    <button class="nav-btn" onclick="nav('juridico', this)"><svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.5L19.5 19h-15L12 5.5z"/></svg><span>Jurídico</span></button>
+    <button class="nav-btn" onclick="nav('ferramentas', this)"><svg viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H3V4h18v10z"/></svg><span>IA</span></button>
+</nav>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
