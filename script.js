@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
     // --- CONFIGURAÇÃO ---
-    const GEMINI_API_KEY = "GEMINI_API_KEY"; 
+    const GEMINI_API_KEY = "AIzaSyBpB8rfCFmlfxtCY48YrqiC1mVueE80P3Y"; 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -281,22 +281,17 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
     }
 
     // --- IA HELPER ---
-   // script.js (substitua a função callGemini)
-async function callGemini(promptText) {
-    try {
-        // Chama o SEU servidor, não o Google direto
-        const response = await fetch('/api/gemini', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: promptText })
-        });
-        const data = await response.json();
-        return data.text;
-    } catch (e) {
-        console.error(e);
-        return "Erro ao conectar com a IA.";
+ async function callGemini(promptText) {
+        try {
+            const result = await model.generateContent(promptText);
+            const response = await result.response;
+            return response.text();
+        } catch (e) {
+            console.error(e);
+            return "Erro ao conectar com a IA. Verifique se sua chave está ativa.";
+        }
     }
-}
+
 
     // --- FERRAMENTAS ---
     async function analisarLaudo() {
