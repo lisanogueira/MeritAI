@@ -14,7 +14,7 @@ jobs:
     # Passo Mágico: Substitui o texto __GEMINI_API_KEY__ pela chave real
     - name: Inject API Key
       run: |
-        sed -i 's/__GEMINI_API_KEY__/${{ secrets.GEMINI_API_KEY }}/g' public/script.js
+        sed -i 's/__GEMINI_API_KEY__/${{ secrets.GEMINI_API_KEY }}/g' script.js
 
     # Publica no GitHub Pages
     - name: Deploy
