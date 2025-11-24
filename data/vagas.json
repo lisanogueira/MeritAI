@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "empresa": "TechInclusive",
+    "cargo": "Desenvolvedor Front-end Júnior (Remoto)",
+    "descricao": "Vaga afirmativa. Comunicação assíncrona (texto) priorizada. Ambiente inclusivo com suporte a neurodiversidade.",
+    "tags": ["Home Office", "Sem vídeo", "TI", "Programação"],
+    "afirmativa": true,
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "empresa": "DataDivers",
+    "cargo": "Analista de Dados / Qualidade",
+    "descricao": "Foco em detecção de padrões e testes. Ambiente sensorialmente controlado e previsível.",
+    "tags": ["Híbrido - SP", "Rotina Estruturada", "Dados", "Analise"],
+    "afirmativa": true,
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "empresa": "Design Acessível",
+    "cargo": "Assistente de Design Gráfico",
+    "descricao": "Criação de peças visuais com diretrizes claras. Comunicação direta e objetiva.",
+    "tags": ["Remoto", "Criativo", "Flexível", "Desenho", "Design"],
+    "afirmativa": false,
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "empresa": "LogiSpecial",
+    "cargo": "Auxiliar de Logística",
+    "descricao": "Organização de estoque com processos bem definidos e repetitivos. Pouca interação social necessária.",
+    "tags": ["Presencial", "Organização", "Operacional", "Estoque"],
+    "afirmativa": true,
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "empresa": "Contoso General",
+    "cargo": "Assistente Administrativo",
+    "descricao": "Vaga geral para suporte administrativo. Requer boa comunicação e organização.",
+    "tags": ["Presencial", "Administração", "Organização"],
+    "afirmativa": false,
+    "link": "#"
+  }
+]

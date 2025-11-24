@@ -1,0 +1,47 @@
+{
+       "bpc": {
+        "id": "bpc",
+        "nome": "BPC / LOAS",
+        "descricao": "Um salário mínimo mensal para pessoas com deficiência (incapacitante) ou idosos de baixa renda.",
+        "criterios_logicos": { "renda_maxima": 0.25, "requer_cid": true, "idade_minima_idoso": 65 },
+        "tags": ["tea", "fisica", "intelectual", "idoso", "esquizofrenia"],
+        "documentos": ["RG/CPF", "Comprovante de Renda", "Laudo Médico Atualizado (CID)", "CadÚnico"],
+        "checklist": ["Ir ao CRAS (CadÚnico)", "Reunir laudos médicos", "Solicitar 'Meu INSS'", "Agendar perícia", "Consultar resultado"]
+      },
+      "aee": {
+        "id": "aee",
+        "nome": "AEE - Atendimento Educacional",
+        "descricao": "Adaptação escolar, professor de apoio e recursos pedagógicos.",
+        "criterios_logicos": { "renda_maxima": 100, "requer_cid": true },
+        "tags": ["tea", "tdah", "intelectual", "fisica", "auditiva", "visual", "dislexia"],
+        "documentos": ["Laudo médico/pedagógico", "Comprovante de matrícula", "Docs pessoais"],
+        "checklist": ["Reunião escolar", "Entregar laudo", "Pedido formal AEE", "Aguardar PEI"]
+      },
+      "ciptea": {
+        "id": "ciptea",
+        "nome": "Carteira CIPTEA",
+        "descricao": "Identificação nacional para pessoas com Transtorno do Espectro Autista (Lei Romeo Mion).",
+        "criterios_logicos": { "renda_maxima": 100, "requer_cid": true, "cid_especifico": "TEA" },
+        "tags": ["tea"],
+        "documentos": ["Laudo (F84)", "RG/CPF", "Foto 3x4", "Tipo sanguíneo"],
+        "checklist": ["Digitalizar laudo", "Acessar site do governo estadual", "Preencher formulário", "Aguardar emissão"]
+      },
+      "passe_livre": {
+        "id": "passe_livre",
+        "nome": "Passe Livre Interestadual",
+        "descricao": "Gratuidade em ônibus, trens e barcos entre estados.",
+        "criterios_logicos": { "renda_maxima": 1, "requer_cid": true },
+        "tags": ["tea", "fisica", "intelectual", "visual", "auditiva"],
+        "documentos": ["Formulário Governo", "Atestado Médico Padrão", "Renda"],
+        "checklist": ["Imprimir formulários", "Médico SUS assinar", "Enviar correio/internet", "Aguardar carteira"]
+      },
+      "dt_tdah": {
+        "id": "dt_tdah",
+        "nome": "Direitos Escolares TDAH (Lei 14.254)",
+        "descricao": "Garantia de acompanhamento específico para educandos com dislexia ou TDAH.",
+        "criterios_logicos": { "renda_maxima": 100, "requer_cid": false },
+        "tags": ["tdah", "dislexia"],
+        "documentos": ["Laudo Clínico", "Relatório Escolar"],
+        "checklist": ["Apresentar laudo na escola", "Solicitar adaptação de provas", "Acompanhamento pedagógico"]
+      }
+ }
