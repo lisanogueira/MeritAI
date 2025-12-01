@@ -1,13 +1,27 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// --- IA HELPER (ATUALIZADO PARA VERCEL) ---
+    async function callGemini(promptText) {
+        try {
+            // Agora chamamos nossa própria API interna
+            const response = await fetch('/api/gemini', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: promptText })
+            });
 
-    // --- CONFIGURAÇÃO ---
-    // ATENÇÃO: Ao rodar no GitHub Pages, sua chave fica visível no código fonte.
-    // Para projetos de estudo/portfólio é ok, mas evite em produção comercial.
-    const GEMINI_API_KEY = "AIzaSyBpB8rfCFmlfxtCY48YrqiC1mVueE80P3Y"; 
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
 
-    // Instancia a IA
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-preview-09-2025" });
+            const data = await response.json();
+            return data.text;
+        } catch (e) {
+            console.error(e);
+            return "Erro ao conectar com a IA. Tente novamente mais tarde.";
+        }
+    }
+
 
     let BENEFICIOS_DB = null;
     let VAGAS_DB = null;
@@ -285,17 +299,29 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
     }
 
     // --- IA HELPER ---
+// --- IA HELPER (ATUALIZADO PARA VERCEL) ---
     async function callGemini(promptText) {
         try {
-            const result = await model.generateContent(promptText);
-            const response = await result.response;
-            return response.text();
+            // Agora chamamos nossa própria API interna
+            const response = await fetch('/api/gemini', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: promptText })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.text;
         } catch (e) {
             console.error(e);
-            return "Erro ao conectar com a IA. Verifique se sua chave está ativa.";
+            return "Erro ao conectar com a IA. Tente novamente mais tarde.";
         }
     }
-
     // --- FERRAMENTAS ---
     async function analisarLaudo() {
         const texto = document.getElementById('laudoInput').value;
